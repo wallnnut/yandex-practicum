@@ -1,4 +1,5 @@
 package ru.common.input;
+
 import java.util.Scanner;
 
 public class UserInput {

@@ -9,7 +9,7 @@ import ru.common.menu.MenuList;
 
 public class Main {
 
-    static DinnerConstructor dinnerConstructor = new DinnerConstructor();;
+    static DinnerConstructor dinnerConstructor = new DinnerConstructor();
     static UserInput userInput = new UserInput();
     static MenuList menuList = new MenuList();
 
