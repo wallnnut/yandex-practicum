@@ -1,17 +1,13 @@
 package ru.practicum.dinner;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import ru.common.random.Random;
+import java.util.*;
 
 public class DinnerConstructor {
-    HashMap<String, ArrayList<String>> dinnersByType = new HashMap<>(); // хранилище блюд
+    HashMap<String, Set<String>> dinnersByType = new HashMap<>(); // хранилище блюд
     Random random = new Random(); // класс для случайного выбора
 
     public void addNewDish(String dishType, String dishName) {
-        dinnersByType.computeIfAbsent(dishType, k -> new ArrayList<>()).add(dishName);
+        dinnersByType.computeIfAbsent(dishType, k -> new HashSet<>()).add(dishName);
     }
 
     public List<ArrayList<String>> generateCombos(int comboNumber, ArrayList<String> dishTypes) {
@@ -33,7 +29,7 @@ public class DinnerConstructor {
         ArrayList<String> selectedDishes = new ArrayList<>();
 
         for (String dishType : dishTypes) {
-            ArrayList<String> availableDishes = dinnersByType.get(dishType);
+            Set<String> availableDishes = dinnersByType.get(dishType);
             String selectedDish = getRandomDish(availableDishes);
             selectedDishes.add(selectedDish);
         }
@@ -41,10 +37,10 @@ public class DinnerConstructor {
         return selectedDishes;
     }
 
-    private String getRandomDish(ArrayList<String> availableDishes) {
-        int numberOfDishesForType = availableDishes.size();
-        int dishIndex = random.nextInt(numberOfDishesForType);
-        return availableDishes.get(dishIndex);
+    private String getRandomDish(Set<String> availableDishes) {
+        List<String> dishes = new ArrayList<>(availableDishes);
+        int dishIndex = random.nextInt(availableDishes.size());
+        return dishes.get(dishIndex);
 
     }
 

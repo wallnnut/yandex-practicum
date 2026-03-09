@@ -1,6 +1,5 @@
 package ru.common.menu;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,8 +9,7 @@ public class MenuList {
     private final Map<Integer, MenuItem> menuMap = new LinkedHashMap<>();
 
     public void drawMenu() {
-        menuMap.values().stream()
-                .forEach(item -> System.out.printf("%d. %s%n", item.getPosition(), item.getName()));
+        menuMap.values().forEach(item -> System.out.printf("%d. %s%n", item.getPosition(), item.getName()));
     }
 
     public void addMenuOptions(List<MenuItem> options) {
@@ -29,13 +27,5 @@ public class MenuList {
         } else {
             System.out.println("Неверный выбор");
         }
-    }
-
-    public String getAvailableOptions() {
-        if (menuMap.isEmpty())
-            return "Меню пустое";
-        int min = Collections.min(menuMap.keySet());
-        int max = Collections.max(menuMap.keySet());
-        return String.format("Выберите пункт: %d - %d%n", min, max);
     }
 }

@@ -1,9 +1,9 @@
 package ru.common.menu;
 
 public class MenuItem {
-    private String name;
-    private int position;
-    private Runnable action;
+    private final String name;
+    private final int position;
+    private final Runnable action;
 
     public MenuItem(String name, int position, Runnable action) {
         this.name = name;

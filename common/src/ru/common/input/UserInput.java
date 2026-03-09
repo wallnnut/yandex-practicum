@@ -3,7 +3,7 @@ package ru.common.input;
 import java.util.Scanner;
 
 public class UserInput {
-    public final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public int readInt() {
         try {
@@ -15,7 +15,12 @@ public class UserInput {
     }
 
     public String readLine() {
-        return scanner.nextLine();
+        String input;
+        do {
+            input = readLine();
+        } while (input.isBlank());
+
+        return input;
     }
 
 }
