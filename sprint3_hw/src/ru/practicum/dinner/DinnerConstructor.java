@@ -1,53 +1,63 @@
 package ru.practicum.dinner;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Random;
 
 public class DinnerConstructor {
-    private final Map<String, ArrayList<String>> groupedDishesList = new HashMap<>();
+    HashMap<String, ArrayList<String>> dinnersByType = new HashMap<>(); // хранилище блюд
+    Random random = new Random(); // класс для случайного выбора
 
-    public void addDish(String category, String dishName) {
-        System.out.printf("%s %s", category, dishName);
-        ArrayList<String> existedList = groupedDishesList.getOrDefault(category, new ArrayList<>());
-        existedList.add(dishName); // добавляем в список название блюда
-        groupedDishesList.put(category, existedList);
-        for (String c : groupedDishesList.keySet()) {
-            System.out.println(c);
+    // добавление блюда
+    public void addNewDish(String dishType, String dishName) {
+        ArrayList<String> dishesForType; // список блюд данного типа
+
+        if (dinnersByType.containsKey(dishType)) { // проверяем наличие типа
+            dishesForType = dinnersByType.get(dishType); // получаем существующий список
+        } else {
+            dishesForType = new ArrayList<>(); // создаём новый список
+            dinnersByType.put(dishType, dishesForType); // сохраняем его в хранилище
         }
+
+        dishesForType.add(dishName); // добавляем блюдо
     }
 
-    public List<ArrayList<String>> generateCombos(List<String> categoriesList) {
-        ArrayList<ArrayList<String>> dishesValues = new ArrayList<>();
-        ArrayList<ArrayList<String>> preparedCombos = new ArrayList<>();
+    // генерация комбинаций
+    public ArrayList<ArrayList<String>> generateCombos(int comboNumber, ArrayList<String> dishTypes) {
+        ArrayList<ArrayList<String>> combos = new ArrayList<>(); // список комбинаций
 
-        for (String category : categoriesList) {
-            ArrayList<String> valueByCategory = groupedDishesList.getOrDefault(category, new ArrayList<String>());
-            System.out.println(valueByCategory);
-            if (!valueByCategory.isEmpty()) {
-                dishesValues.add(valueByCategory);
-            }
-        }
-        dishesValues.sort(Comparator.comparingInt(ArrayList::size));
-        int minElementLength = 0;
-        try {
-            minElementLength = dishesValues.getFirst().size();
-        } catch (Exception e) {
-
+        for (int i = 0; i < comboNumber; i++) {
+            ArrayList<String> combo = generateCombo(dishTypes);
+            combos.add(combo);
         }
 
-        if (minElementLength > 0) {
-            for (int i = 0; i < minElementLength; i++) {
-                for (ArrayList<String> dishesValue : dishesValues) {
-                    preparedCombos.add(dishesValue);
-                }
-            }
-        }
-        System.out.println(dishesValues);
-        return preparedCombos;
+        return combos;
+    }
 
+    // проверка наличия типа блюда
+    public boolean checkType(String type) {
+        return dinnersByType.containsKey(type);
+    }
+
+    // генерация одной комбинации
+    private ArrayList<String> generateCombo(ArrayList<String> dishTypes) {
+        ArrayList<String> selectedDishes = new ArrayList<>();
+
+        for (String dishType : dishTypes) {
+            ArrayList<String> availableDishes = dinnersByType.get(dishType);
+            String selectedDish = getRandomDish(availableDishes);
+            selectedDishes.add(selectedDish);
+        }
+
+        return selectedDishes;
+    }
+
+    // получение случайного блюда
+    private String getRandomDish(ArrayList<String> availableDishes) {
+        int numberOfDishesForType = availableDishes.size();
+        int dishIndex = random.nextInt(numberOfDishesForType);
+        String selectedDish = availableDishes.get(dishIndex);
+        return selectedDish;
     }
 
 }
