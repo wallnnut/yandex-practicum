@@ -1,4 +1,4 @@
-package ru.common.menu;
+package ru.practicum.common.menu;
 
 import java.util.Comparator;
 import java.util.LinkedHashMap;

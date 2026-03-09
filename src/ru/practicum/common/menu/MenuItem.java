@@ -1,9 +1,14 @@
-package ru.common.menu;
+package ru.practicum.common.menu;
 
 public class MenuItem {
     private final String name;
     private final int position;
     private final Runnable action;
+
+    public MenuItem(String name, int position) {
+        this(name, position, () -> {
+        });
+    }
 
     public MenuItem(String name, int position, Runnable action) {
         this.name = name;

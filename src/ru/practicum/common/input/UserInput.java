@@ -1,4 +1,4 @@
-package ru.common.input;
+package ru.practicum.common.input;
 
 import java.util.Scanner;
 
@@ -15,12 +15,7 @@ public class UserInput {
     }
 
     public String readLine() {
-        String input;
-        do {
-            input = readLine();
-        } while (input.isBlank());
-
-        return input;
+        return scanner.nextLine();
     }
 
 }

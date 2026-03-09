@@ -1,11 +1,9 @@
 package ru.practicum.dinner;
 
+import ru.practicum.common.input.*;
+import ru.practicum.common.menu.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import ru.common.input.UserInput;
-import ru.common.menu.MenuItem;
-import ru.common.menu.MenuList;
 
 public class Main {
 
@@ -45,8 +43,10 @@ public class Main {
         String dishType = userInput.readLine();
         System.out.println("Введите название блюда:");
         String dishName = userInput.readLine();
+        if (!dishType.isBlank() && !dishName.isBlank()) {
+            dinnerConstructor.addNewDish(dishType, dishName);
+        }
 
-        dinnerConstructor.addNewDish(dishType, dishName);
     }
 
     private static void generateDishCombo() {
